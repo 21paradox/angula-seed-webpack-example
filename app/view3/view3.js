@@ -5,7 +5,7 @@ require('angular-ui-router');
 require('ng-debounce');
 
 // create a sub module
-var mod = angular.module('myAppview2', ['debounce', 'ui.router']);
+var mod = angular.module('myApp.view2', ['debounce', 'ui.router']);
 
 // load controller 
 require('./view3.controller')(mod);

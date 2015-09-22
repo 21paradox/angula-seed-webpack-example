@@ -1,0 +1,11 @@
+.view2 {
+	border:1px solid green;
+}
+
+.lazyload2 {
+	background-image: url("./img/oclazyload.png");
+	width:100px;
+	height: 100px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}

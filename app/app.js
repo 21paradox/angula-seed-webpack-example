@@ -7,6 +7,13 @@ require('oclazyload');
 require('angular-ui-router');
 require('./components/version/version.js');
 
+var $ = require('jquery');
+
+// require boostrap
+require("bootstrap/dist/css/bootstrap.css");
+require("bootstrap/dist/js/bootstrap.js");
+
+
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
       'ui.router',
@@ -28,12 +35,18 @@ angular.module('myApp', [
                         fn(function (mod) {
                               $ocLazyLoad.inject(mod.name);
                               resolve(mod.template);
-                        })
+                        });
                   });
             }];
       }
+      
+      $stateProvider.state('view1', {
+            template: require('./view1/view1.html'),
+            controller: 'View1Ctrl',
+            url:'/view1'
+      })
 
-      $stateProvider.state('view2', {
+      .state('view2', {
             url: '/view2',
             templateProvider: loadModule(function (cb) {
                   require(['./view2/view2.js'], cb);

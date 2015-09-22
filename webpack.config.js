@@ -18,20 +18,24 @@ module.exports = {
 		path: path.resolve('build/asset'), // save the generated files in /build/js/ on the server
 		// where the bundle will be served up from on the server
 		publicPath: '/asset/', // serve that file up at /assets/ on the server
-		filename: "bundle.js"
+		filename: "bundle.js",
+		chunkFilename: "[id].bundle.[hash].js" //add hash here to refresh cache
 	},
 
-	// needed for CSS bundle
 	plugins: [
-		// define the name of the output css file.
-        new ExtractTextPlugin("bundle.css"),
-		new webpack.ResolverPlugin(bowerPlugin),
+        new ExtractTextPlugin("bundle.css"), // define output css file
+		new webpack.ResolverPlugin(bowerPlugin), // 
 		new webpack.optimize.DedupePlugin(),
+        new webpack.ProvidePlugin({	//global namespace for legacy module
+            $: "jquery",
+            jQuery: "jquery",
+			"window.jQuery": "jquery"
+        })
     ],
 
 	devServer: {
 		// load index.html from /public
-		contentBase: 'app'
+		contentBase: 'build'
 	},
 	
 	// turn on source maps
@@ -40,44 +44,51 @@ module.exports = {
 	// Loaders apply transformations before a file is added to bundle.js
 	module: {
 		loaders: [
-			// CSS loader loads css file with resolved imports and returns css code
-			// because we are using the plugin, it's
+			// CSS loader
 			{
 				test: /\.css$/,
-				exclude: /node_modules/,
-				// when chaining loaders (via the '!'), loaders are applied from right to left
-				// loader: "style-loader!css-loader"
-				// first param is only used when NOT extracting CSS to a file.
-				// second param is always used.
+				//exclude: /node_modules/, //not exclude we need boostrap here
 				loader: ExtractTextPlugin.extract("style-loader", "css-loader")
 			},
+			// SCSS loader
+			{
+				test: /\.scss/,
+				exclude: /node_modules/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
+            },
 			
 			// Babel loader. Transforms .es6 file from es6->es5 before it's added to bundle.js
-			// {
-			// 	test: /\.js$/, // include .es6 files
-			// 	exclude: /node_modules/, // exclude node_modules
-			// 	loader: "babel-loader"
-			// },
-			
+			{
+				test: /\.js$/, // include .es6 files
+				exclude: /(node_modules|bower_components)/, // exclude node_modules and bower_components
+				loader: "babel-loader"
+			},
+			// html loader
 			{
 				test: /\.html/,
 				loader: 'raw'
-			}
+			},
 			
+			// img/fonts loader
+			{
+				test: /\.(png|jpg|gif|eot|ttf|svg|woff|woff2)/,
+				loader: 'url-loader?limit=1000'
+			},
 			
-			
+			// {
+			// 	test: /bootstrap\/js\//, 
+			// 	loader: 'imports?jQuery=jquery'
+			// },
 		],
 		
 		preLoaders: [
 		]
-		
 	},
-
 
 	resolve: {
 		// allows require('file') instead of require('file.es6')
 		// overrides the default arrray, so we have to include .js files - http://webpack.github.io/docs/configuration.html#resolve-extensions
-		extensions: ['', '.js', '.es6'],
+		extensions: ['', '.js', '.es6', '.scss'],
 		//root: [path.resolve("app/bower_components")]
 		modulesDirectories: ['node_modules', path.resolve("app/bower_components")],
 	}
