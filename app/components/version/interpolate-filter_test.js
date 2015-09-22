@@ -1,10 +1,12 @@
 'use strict';
 
+require('./version.js');
+
 describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+  beforeEach(window.module('myApp.version'));
 
   describe('interpolate filter', function() {
-    beforeEach(module(function($provide) {
+    beforeEach(window.module(function($provide) {
       $provide.value('version', 'TEST_VER');
     }));
 

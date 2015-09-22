@@ -24,7 +24,7 @@ module.exports = {
 
 	plugins: [
         new ExtractTextPlugin("bundle.css"), // define output css file
-		new webpack.ResolverPlugin(bowerPlugin), // 
+		new webpack.ResolverPlugin(bowerPlugin), // add bower.json as deps
 		new webpack.optimize.DedupePlugin(),
         new webpack.ProvidePlugin({	//global namespace for legacy module
             $: "jquery",
@@ -58,11 +58,11 @@ module.exports = {
             },
 			
 			// Babel loader. Transforms .es6 file from es6->es5 before it's added to bundle.js
-			{
-				test: /\.js$/, // include .es6 files
-				exclude: /(node_modules|bower_components)/, // exclude node_modules and bower_components
-				loader: "babel-loader"
-			},
+			// {
+			// 	test: /\.js$/, // include .es6 files
+			// 	exclude: /(node_modules|bower_components)/, // exclude node_modules and bower_components
+			// 	loader: "babel-loader"
+			// },
 			// html loader
 			{
 				test: /\.html/,

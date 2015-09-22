@@ -5,6 +5,7 @@ var mod = angular.module('myApp.view1', ['ui.router']);
 
 require('./view1.controller.js')(mod);
 
+ 
 // .config(['$stateProvider', function($stateProvider) {
 //   $stateProvider.state('view1', {
 //     template: require('./view1.html'),

@@ -1,15 +1,21 @@
 'use strict';
 
+require('./view2.js');
+
 describe('myApp.view2 module', function() {
 
-  beforeEach(module('myApp.view2'));
+  beforeEach(window.module('myApp.view2'));
 
   describe('view2 controller', function(){
 
-    it('should ....', inject(function($controller) {
+    it('should ....', inject(function($rootScope, $controller) {
+ 
       //spec body
-      var view2Ctrl = $controller('View2Ctrl');
+      var scope = $rootScope.$new();
+      var view2Ctrl = $controller('View2Ctrl', {$scope: scope});
       expect(view2Ctrl).toBeDefined();
+      
+      
     }));
 
   });

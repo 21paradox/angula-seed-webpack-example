@@ -1,7 +1,9 @@
 'use strict';
 
+require('./version.js');
+
 describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+  beforeEach(window.module('myApp.version'));
 
   describe('version service', function() {
     it('should return current version', inject(function(version) {
