@@ -47,6 +47,7 @@
   "dependencies": {
     "angular": "^1.4.6",
     "angular-ui-router": "^0.2.15",
+    "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
     "oclazyload": "^1.0.5",
     "ui-router": "0.0.1"
